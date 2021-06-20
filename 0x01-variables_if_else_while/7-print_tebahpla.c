@@ -1,28 +1,14 @@
 #include <stdio.h>
 /**
 * main - Entry point
-* Description: Print lower case a-z
-* Return: Return
+*
+* Return: Always 0 (Success)
 */
 int main(void)
 {
-char ch;
-for (ch = 'z'; ch >= 'a'; ch--)
-putchar(ch);
-putchar('\n');
-return (0);
-}
-#include <stdio.h>
-/**
-* main - Entry point
-* Description: Print lower case a-z
-* Return: Return
-*/
-int main(void)
-{
-char ch;
-for (ch = 'z'; ch >= 'a'; ch--)
-putchar(ch);
+char letter;
+for (letter = 'z'; letter >= 'a'; letter--)
+putchar(letter);
 putchar('\n');
 return (0);
 }
