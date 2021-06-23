@@ -1,41 +1,47 @@
 #include <stdio.h>
 /**
-* main - check the code for Holberton School students.
+* main - Prints the first 98 Fibonacci numbers
 *
-* Return: 0
+* Return: Always 0.
 */
 int main(void)
 {
-unsigned long int a = 0, b = 1, c;
-unsigned long int d, e, f, g;
-int h = 0;
-for (h = 0; h <= 91; h++)
+int c, boolean, boolean2;
+long int n1, n2, fn, fn2, n11, n22;
+n1 = 1;
+n2 = 2;
+boolean =  boolean2 = 1;
+printf("%ld, %ld", n1, n2);
+for (c = 0; c < 96; c++)
 {
-c = a + b;
-a = b;
-b = c;
-printf("%lu, ", c);
+if (boolean)
+{
+fn = n1 + n2;
+printf(", %ld", fn);
+n1 = n2;
+n2 = fn;
 }
-d = a % 1000;
-a = a / 1000;
-e = b % 1000;
-b = b / 1000;
-while (h <= 98)
-{
-g = (d + e) / 1000;
-f = (d + e) -g * 1000;
-c = (a + b) +g;
-d = e;
-e = f;
-a = b;
-b = c;
-if (f >= 100)
-printf("%lu%lu", c, f);
 else
-printf("%lu%lu", c, f);
-if (h != 98)
-printf(" , ");
-h++;
+{
+if (boolean2)
+{
+n11 = n1 % 1000000000;
+n22 = n2 % 1000000000;
+n1 = n1 / 1000000000;
+n2 = n2 / 1000000000;
+boolean2 = 0;
+}
+fn2 = (n11 + n22);
+fn = n1 + n2 + (fn2 / 1000000000);
+printf(", %ld", fn);
+printf("%ld", fn2 % 1000000000);
+n1 = n2;
+n11 = n22;
+n2 = fn;
+n22 = (fn2 % 1000000000);
+}
+if (((n1 + n2) < 0) && boolean == 1)
+boolean = 0;
 }
 printf("\n");
 return (0);
