@@ -1,20 +1,24 @@
 #include "holberton.h"
+#include <stdio.h>
 /**
-* print_square - prints hashes squares.
-* @size: size of the square.
-* Return: no return.
+* print_square - Print square line dependent on the integer n.
+* @n : The number of lines using '#' characters to use per row and column
+* Return: Void.
 */
-void print_square(int size)
+void print_square(int n)
 {
-int i, j;
-for (i = 0; i < size; i++)
+int x;
+int y;
+for (y = 0; y < n; y++)
 {
-for (j = 0; j < size; j++)
+for (x = 0; x < n; x++)
 {
-_putchar(35);
-}
-if (i != size - 1)
-_putchar('\n');
+_putchar('#');
 }
 _putchar('\n');
+}
+if (n <= 0)
+{
+_putchar('\n');
+}
 }
