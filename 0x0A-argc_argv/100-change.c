@@ -1,63 +1,42 @@
-#include "holberton.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "holberton.h"
 /**
-*main - program that adds positive numbers.
-*@argc: number of arguments passed for the sum
-*@argv: array of pointer to the arguments
+* main - entry point
 *
-*Return: 0 success, 1 error.
+* @argc: number of command line arguments
+* @argv: arguments as string arrays
+*
+* Description: compute the minimum number of coins to make change
+* for an amount of money
+*
+* Return: 0 (success), 1 (failure - if no arguments passed)
 */
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-int cents[] = {25, 10, 5, 2, 1};
-int  total, div, cont = 0;
-int i;
+int coins[5] = { 25, 10, 5, 2, 1 };
+int total, i, val;
+total = 0;
 if (argc != 2)
 {
 printf("Error\n");
 return (1);
 }
-total = _atoi(argv[1]);
-if (total < 0)
+val = atoi(argv[1]);
+if (val < 1)
 {
-printf("%d\n", 0);
-return (0);
+printf("0\n");
 }
-for (i = 0; i < 5; i++)
+else
 {
-div = total / cents[i];
-cont += div;
-total = total - (div * (cents[i]));
-}
-printf("%d\n", cont);
-return (0);
-}
-/**
-* _atoi - function that convert a string to an integer.
-* @s: the string to convert.
-*
-* Return: the integer to print.
-*
-*/
-int _atoi(char *s)
+for (i = 0; i < 5; ++i)
 {
-int  sign = 1;
-unsigned int res = 0;
-while (*s != '\0')
-{
-if (*s == '-')
-{
-sign = sign * -1;
-}
-else if (*s >= '0' && *s <= '9')
-{
-res = (res * 10) + (*s - '0');
-}
-else if (*s == ';')
-{
+total += (val / coins[i]);
+val %= coins[i];
+if (val == 0)
 break;
 }
-s++;
+printf("%d\n", total);
 }
-return (res * sign);
+return (0);
 }

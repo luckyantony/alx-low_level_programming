@@ -1,51 +1,23 @@
-#include "holberton.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "holberton.h"
 /**
-*main - program that multiplies two numbers.
-*@argc: number of arguments passed for the multiplication
-*@argv: array of pointer to the arguments
+* main - Entry point
 *
-*Return: 0 success, 1 error.
+* @argc: command line argument count
+* @argv: arguments as string arrays
+*
+* Description: multiply two integers from command line arguments
+*
+* Return: 0 (success), 1 (failure)
 */
 int main(int argc, char *argv[])
 {
-int i, mult = 1;
-if (argc <= 2)
+if (argc != 3)
 {
-printf("%s\n", "Error");
+printf("Error\n");
 return (1);
 }
-for (i = 1 ; i < argc ; i++)
-mult = mult * _atoi(argv[i]);
-printf("%d\n", mult);
+printf("%d\n", atoi(argv[1]) * atoi(argv[2]));
 return (0);
-}
-/**
-* _atoi - function that convert a string to an integer.
-* @s: the string to convert.
-*
-* Return: the integer to print.
-*
-*/
-int _atoi(char *s)
-{
-int  sign = 1;
-unsigned int res = 0;
-while (*s != '\0')
-{
-if (*s == '-')
-{
-sign = sign * -1;
-}
-else if (*s >= '0' && *s <= '9')
-{
-res = (res * 10) + (*s - '0');
-}
-else if (*s == ';')
-{
-break;
-}
-s++;
-}
-return (res * sign);
 }
