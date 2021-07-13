@@ -1,96 +1,106 @@
-#include "holberton.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 /**
-* strtow - splits a string into words
-* @str: string of words to be split
-* Return: double pointer to strings
+* wordnos - counts no of words in a given string
+* @str: pointer to the string
+*
+* Return: No. of words in the string (int)
+*/
+int wordnos(char *str)
+{
+int wordno, i, j;
+wordno = 0;
+i = 0;
+while (*(str + i) != '\0')
+{
+if (*(str + i) != 32 && *(str + i) != '\0')
+{
+j = i;
+while (*(str + j) != 32 && *(str + j) != '\0')
+j++;
+wordno++;
+i = j - 1;
+}
+i++;
+}
+return (wordno);
+}
+/**
+* cpystr - copies words in string to different elements of 2d array of strings
+* @s: double pointer to a 2D array of strings
+* @str: pointer to string whose words are to be copied
+*
+* Return: void
+*/
+void cpystr(char **s, char *str)
+{
+int i, j, l, idx;
+i = 0;
+idx = 0;
+while (*(str + i) != '\0')
+{
+if (*(str + i) != 32 && *(str + i) != '\0')
+{
+j = i;
+l = 0;
+while (*(str + j) != 32 && *(str + j) != '\0')
+{
+s[idx][l] = *(str + j);
+l++;
+j++;
+}
+s[idx][l] = '\0';
+idx++;
+i = j;
+}
+i++;
+}
+}
+/**
+* strtow - splits a string into words and stores the words in an array
+* @str: pointer to string
+*
+* Return: double pointer to the array containing the words
 */
 char **strtow(char *str)
 {
-char **ptr;
-int i, k, len, start, end, j = 0;
-int words =  countWords(str);
-if (!str || !countWords(str))
-return (NULL);
-ptr = malloc(sizeof(char *) * (words + 1));
-if (!ptr)
-return (NULL);
-for (i = 0; i < words; i++)
+char **s;
+int wordno, i, j, k, length, idx;
+if (str == NULL || str[0] == '\0')
+return (0);
+wordno = wordnos(str);
+s = (char **)malloc(sizeof(char *) * (wordno + 1));
+if (s == 0 || wordno == 0)
+return (0);
+i = 0;
+idx = 0;
+while (*(str + i) != '\0')
 {
-start = startIndex(str, j);
-end = endIndex(str, start);
-len = end - start;
-ptr[i] = malloc(sizeof(char) * (len + 1));
-if (!ptr[i])
+if (*(str + i) != 32 && *(str + i) != '\0')
 {
-i -= 1;
-while (i >= 0)
+j = i;
+length = 0;
+while (*(str + j) != 32 && *(str + j) != '\0')
 {
-free(ptr[i]);
-i--;
+length++;
+printf("Length is %d\n", length);
+j++;
 }
-free(ptr);
-return (NULL);
-}
-for (k = 0; k < len; k++)
-ptr[i][k] = str[start++];
-ptr[i][k++] = '\0';
-j = end + 1;
-}
-ptr[i] = NULL;
-return (ptr);
-}
-/**
-* isSpace - determines if character is a space or not
-* @c: input char
-* Return: 1 if true or 0 or not
-*/
-int isSpace(char c)
+*(s + idx) = (char *)malloc(sizeof(char) * (length + 1));
+if (*(s + idx) == 0)
 {
-return (c == ' ');
+for (k = 0; k < idx; k++)
+free(*(s + k));
+free(s);
+return (0);
 }
-/**
-* startindex - returns first index of non-space char
-* @s: input string
-* @index: starting index
-* Return: index of first non-space char
-*/
-int startIndex(char *s, int index)
-{
-while (isSpace(*(s + index)))
-index++;
-return (index);
+idx++;
+i = j - 1;
+printf("value of i is %d \n", i);
 }
-/**
-* endIndex - returns last index of non-space char
-* @s: input string
-* @index: starting index
-* Return: index of last index of non-space char
-*/
-int endIndex(char *s, int index)
-{
-while (!isSpace(*(s + index)))
-index++;
-return (index);
+i++;
 }
-/**
-* countWords - counts numbers of words in string
-* @s: input string
-* Return: number of words
-*/
-int countWords(char *s)
-{
-int wordOn = 0;
-int words = 0;
-while (*s)
-{
-if (isSpace(*s) && wordOn)
-wordon = 0;
-else if (!isSpace(*s) && !wordOn)
-{
-wordOn = 1;
-words++;
-}
-s++;
-}
-return (words);
+cpystr(s, str);
+return (s);
 }
