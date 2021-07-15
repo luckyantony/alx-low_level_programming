@@ -1,40 +1,46 @@
 #include <stdlib.h>
-#include "holberton.h"
 /**
-* string_nconcat - concatenate two strings
+* string_nconcat - concatenates two strings.
+* @s1: pointer to first string.
+* @s2: pointer to second string from which we'll take first n bytes.
+* @n: n bytes of s2.
 *
-* @s1: the first string
-* @s2: the second string
-* @n: number of bytes from @s2 to join with @s1
-*
-* Description: if NULL is passed, treat as empty string
-*		if @n > length of @s2, take the whole string
-*
-* Return: pointer to the concatenated string, otherwise NULL
+* Return: pointer to newly allocated space in memory.
+* NULL if malloc fails.
 */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-unsigned int len1, len2, i, j;
-char *s;
-char *nul = "";
+char *nstr;
+unsigned int len1, len2, size, i, j;
 if (s1 == NULL)
-s1 = nul;
+s1 = "";
 if (s2 == NULL)
-s2 = nul;
-len1 = 0, len2 = 0;
-while (*(s1 + len1))
+s2 = "";
+len1 = 0;
+while (s1[len1] != '\0')
 len1++;
-while (*(s2 + len2))
+len2 = 0;
+while (s2[len2] != '\0')
 len2++;
-if (n < len2)
-len2 = n;
-s = malloc(sizeof(char) * (len1 + len2 + 1));
-if (s == 0)
-return (0);
-for (i = 0; i < len1; i++)
-*(s + i) = *(s1 + i);
-for (i = 0, j = len1; i <= len2; j++, i++)
-*(s + j) = *(s2 + i);
-*(s + j) = '\0';
-return (s);
+if (n >= len2)
+n = len2;
+size = len1 + n;
+nstr = malloc((sizeof(char) * size)+1);
+if (nstr == NULL)
+return (NULL);
+i = 0;
+while (i < len1)
+{
+nstr[i] = s1[i];
+i++;
+}
+j = 0;
+while (i < size)
+{
+nstr[i] = s2[j];
+i++;
+j++;
+}
+nstr[i] = '\0';
+return (nstr);
 }
