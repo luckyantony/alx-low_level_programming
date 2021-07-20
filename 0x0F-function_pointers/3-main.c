@@ -1,37 +1,37 @@
 #include "3-calc.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 /**
-* main - Entry point
-*
-* @argc: argument count
+* main - return result of desired calculation from command line options
+* @argc: number of command line arguments
 * @argv: array of command line arguments
-*
-* Description: perform a mathematical operation
-*
-* Return: 0 (success)
+* Return: EXIT_FAILURE if unsuccessful or EXIT_SUCCESS if success.
 */
 int main(int argc, char *argv[])
 {
-long result;
-int (*func)(int, int);
-if (argc != 4 || (argv[2][0] != '*' && argv[2][0] != '+' &&
-argv[2][0] != '/' && argv[2][0] != '-' && argv[2][0] != '%'))
+int num1, num2, calc;
+int (*op_func)(int, int);
+char *operator;
+if (argc != 4)
 {
 printf("Error\n");
-return (1);
+exit(98);
 }
-if ((argv[2][0] == '/' || argv[2][0] == '%') && atoi(argv[3]) == 0)
+operator = argv[2];
+num1 = atoi(argv[1]);
+num2 = atoi(argv[3]);
+if ((operator[0] == '/' || operator[0] == '%') && num2 == 0)
 {
 printf("Error\n");
-return (2);
+exit(100);
 }
-result = 0;
-func = get_op_func(argv[2]);
-if (func != 0)
+op_func = get_op_func(operator);
+if (op_func == NULL)
 {
-result = func(atoi(argv[1]), atoi(argv[3]));
-printf("%ld\n", result);
+printf("Error\n");
+exit(99);
 }
-return (0);
+calc = op_func(num1, num2);
+printf("%d\n", calc);
+exit(EXIT_SUCCESS);
 }
