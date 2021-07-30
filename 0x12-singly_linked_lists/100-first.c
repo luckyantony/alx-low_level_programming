@@ -1,11 +1,11 @@
+#include <stdio.h>
 #include "lists.h"
 /**
-*print - prints before main
+* print_first - a function to be executed before main
 *
-*Return: void.
 */
-void print(void)
+void __attribute__ ((__constructor__)) print_first(void)
 {
-printf("You're beat! and yet, you must allow,");
-printf("\nI bore my house upon my back!\n");
+printf("You're beat! and yet, you must allow,\n");
+printf("I bore my house upon my back!\n");
 }
