@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include "holberton.h"
+#include "main.h"
 /**
-* set_bit - set bits at index to 1
-* @n: the given numer
-* @index: the given index
+* set_bit - set bit at a specified index
 *
-* Return: 1 for success -1 otherwise
-**/
-int set_bit(unsigned long int *n, unsigned int index)
+* @num: the number to process
+* @index: the index to the set the bit at
+*
+* Return: 1 if it worked, -1 if an error occured
+*/
+int set_bit(unsigned long int *num, unsigned int index)
 {
-if (index > sizeof(unsigned long int) * 8)
+if (index > 63)
 return (-1);
-*n = *n | (1 << index);
+*num |= (1 << index);
 return (1);
 }

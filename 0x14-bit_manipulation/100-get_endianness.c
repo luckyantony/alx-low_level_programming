@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include "holberton.h"
+#include "main.h"
 /**
-* get_endianness - check whether it is a little or big endian
+* get_endianness - check the endianness of one's machine
 *
-* Return: 1 if little endian o otherwise
-**/
+* Return: 1 if it's little endian, 0 if it's big endian
+*
+*/
 int get_endianness(void)
 {
-int i = 1;
-char *checkendian;
-checkendian = (char *)&i;
-if (*checkendian == 1)
+unsigned int i = 1;
+char *ch;
+ch = (char *)&i;
+if (*ch)
 return (1);
 return (0);
 }

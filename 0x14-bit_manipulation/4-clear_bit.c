@@ -1,19 +1,17 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include "holberton.h"
+#include "main.h"
 /**
-* clear_bit - set nth value at index to 0
-* @n: the given bit
-* @index: the given index
+* clear_bit - set a bit at a specified position to 0
 *
-* Return: 1 for success -1 otherwise
-**/
-int clear_bit(unsigned long int *n, unsigned int index)
+* @num: pointer to an integer
+* @index: index to set bit
+*
+* Return: 1 if it worked, otherwise -1
+*
+*/
+int clear_bit(unsigned long int *num, unsigned int index)
 {
-unsigned long int temp;
-if (index > sizeof(unsigned long int) * 8)
+if (index > 63)
 return (-1);
-temp = *n ^ (1 << index);
-*n &= temp;
+*num &= ~(1 << index);
 return (1);
 }

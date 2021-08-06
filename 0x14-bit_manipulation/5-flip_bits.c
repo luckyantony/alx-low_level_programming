@@ -1,22 +1,23 @@
-#include <stdio.h>
-#include "holberton.h"
+#include "main.h"
 /**
-* flip_bits - find number of bits required to change one number to another
-* @n: the first number
-* @m: the second number
+* flip_bits - compute the number of bits needed to flip to get from one
+* number to another
 *
-* Return: the number of bits needs to be changed
-**/
-unsigned int flip_bits(unsigned long int n, unsigned long int m)
+* @num1: first number
+* @num2: second numer
+*
+* Return: number of bits to be flipped
+*/
+unsigned int flip_bits(unsigned long int num1, unsigned long int num2)
 {
-unsigned int b = 0;
-unsigned long int rslt;
-rslt = n ^ m;
-while (rslt > 0)
+int index, bit1, bit2, count;
+count = 0;
+for (index = 31; index >= 0; --index)
 {
-if (rslt & 1)
-b++;
-rslt = rslt >> 1;
+bit1 = (num1 & (1 << index)) != 0;
+bit2 = (num2 & (1 << index)) != 0;
+if (bit1 != bit2)
+count++;
 }
-return (b);
+return (count);
 }

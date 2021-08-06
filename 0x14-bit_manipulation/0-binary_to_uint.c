@@ -1,50 +1,43 @@
-#include <stdlib.h>
-#include <stdarg.h>
-#include "holberton.h"
-unsigned int power(int x, int y);
+#include "main.h"
+int _strlen(const char *str);
 /**
-* binary_to_uint - convert binary to unsigned int
-* @b: the given binary number
+* binary_to_uint - convert a binary number to unsigned int
 *
-* Return: the converted number
-**/
-unsigned int binary_to_uint(const char *b)
+* @bin: pointer to string of characters of 0 and 1
+*
+* Return: converted number, or 0 if
+*		- there is one or more chars in the string that is not 0 or 1
+*		- @bin is null
+*/
+unsigned int binary_to_uint(const char *bin)
 {
-unsigned int num;
-int i, j;
-i = 0;
-num = 0;
-if (b == '\0')
+unsigned int decimal, index;
+int length;
+if (!bin)
 return (0);
-while (b[i])
-i++;
-j = i - 1;
-i = 0;
-for (; j >= 0; j--)
+index = decimal = 0;
+length = _strlen(bin) - 1;
+while (length >= 0)
 {
-if (b[i] != '0' && b[i] != '1')
+if (*(bin + length) != '0' && *(bin + length) != '1')
 return (0);
-if (b[i] == '1')
-num += power(2, j);
-i++;
+decimal |= (*(bin + length) - '0') << index;
+index++;
+length--;
 }
-return (num);
+return (decimal);
 }
 /**
-* power - finds the power of a number
-* @x: the base
-* @y: the power
+* _strlen - compute the length of a string
 *
-* Return:  x power y
-**/
-unsigned int power(int x, int y)
+* @str: the string to process
+*
+* Return: length of the string
+*/
+int _strlen(const char *str)
 {
-unsigned int p;
-p = 1;
-while (y != 0)
-{
-p *= x;
-y--;
-}
-return (p);
+int length;
+for (length = 0; *(str + length); ++length)
+;
+return (length);
 }
