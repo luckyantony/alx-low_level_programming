@@ -1,39 +1,64 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "main.h"
 #include "holberton.h"
 /**
-* main - copies the content of a file to another file
+* main - Entry point
+*
 * @argc: argument count
-* @argv: argument vector
-* Return: 0 if success
+* @argv: command line arguments
+*
+* Description: - A program that copies the content of a file to another file.
+*		- Usage: cp file_from file_to
+*		- Permissions of the created file: rw-rw-r--.
+*		- If the file already exists, do not change the permissions
+*		- Use 1,024 bytes at a time from the file_from
+*		- dprintf is allowed to use
+*
+* Return: 0 (sucess), or exit with status of:
+*	97 - if argc is not correct,
+*	98 - if file_from does not exist or cannot be read from
+*	99 - if unable to create or if write to file_to fails
+*	100 - if unable to close the file descriptor
+*
 */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-int fd1, fd2;
-int r, c1, c2;
+int fd_from, fd_to;
+long read_count, write_count;
 char buffer[1024];
 if (argc != 3)
 dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
-fd1 = open(argv[1], O_RDONLY);
-if (fd1 < 0)
+fd_from = open(argv[1], O_RDONLY);
+if (fd_from == -1)
 {
 dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 exit(98);
 }
-fd2 = open(argv[2], O_TRUNC | O_CREAT | O_WRONLY, 0664);
-while ((r = read(fd1, buffer, 1024)) > 0)
+fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 00664);
+if (fd_to == -1)
+dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
+while ((read_count = read(fd_from, buffer, 1024)) != 0)
 {
-if (fd2 < 0 || (write(fd2, buffer, r) != r))
-dpintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
-}
-if (r < 0)
+if (read_count == -1)
 {
 dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 exit(98);
 }
-c1 = close(fd1);
-if (c1 < 0)
-dprintf(STDERR_FILENO, "Error: Can't close fd %i\n", fd1), exit(100);
-c2 = close(fd2);
-if (c2 < 0)
-dprintf(STDERR_FILENO, "Error: Can't close fd %i\n", fd2), exit(100);
+write_count = write(fd_to, buffer, read_count);
+if (write_count == -1 || (write_count != read_count))
+{
+dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+exit(99);
+}
+}
+if (close(fd_from) == -1)
+dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from), exit(100);
+if (close(fd_to) == -1)
+dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to), exit(100);
 return (0);
 }
